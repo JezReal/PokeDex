@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import {FlatList, StyleSheet, Text, View} from 'react-native'
+import {FlatList, StyleSheet, Image, View} from 'react-native'
 import {Card} from "../components/Card";
-
-
+import {loading} from "../assets/Images/loading.png"
 
 const renderItem = ({item}) => {
   return (
@@ -39,16 +38,17 @@ export const HomeScreen = () => {
   if (isLoading) {
     return (
       <View>
-        <Text>Loading</Text>
+        <Image source={loading} style={{width: "100%", height: "100%"}}/>
       </View>
     )
   } else {
     return (
       <View style={styles.header}>
-        <FlatList
+        <FlatList 
           data={pokemon}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          contentContainerStyle={{padding: 15}}
         />
       </View>
     )

@@ -1,5 +1,4 @@
 import React from 'react'
-import {StyleSheet} from  'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {HomeScreen} from './screens/HomeScreen'
@@ -20,7 +19,15 @@ const App = () => {
             }
           }}
         />
-        <Stack.Screen name='Detail' component={PokemonDetail} />
+        <Stack.Screen name='Detail' component={PokemonDetail} 
+          options={{
+            title: "Pokédex Data",
+            headerTitleStyle:{
+              fontSize: 25,
+              color: "#17171B",
+            }
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
