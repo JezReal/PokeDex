@@ -57,6 +57,7 @@ export const PokemonDetail = ({route, navigation}) => {
           }}
         />
 
+        <Text style={styles.pokedata}>Pokedex Data</Text>
         <Text>Name: {pokemonName}</Text>
         <Text>{pokemonInfo.speciesInfo.flavor_text_entries[0].flavor_text}</Text>
         <Text>Height: {pokemonInfo.height}</Text>
@@ -84,9 +85,21 @@ export const PokemonDetail = ({route, navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  pokedata: {
+    // paddingTop: 20,
+    width: 334,
+    height: 30,
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#62B957",
+  },
+
   imageStyle: {
-    height: 200,
-    width: 200
+    position: "absolute",
+    width: 125,
+    height: 125,
+    left: 40,
+    top: 95,
   },
 
   divider: {

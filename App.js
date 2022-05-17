@@ -11,17 +11,19 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='Home' component={HomeScreen}/>
+        <Stack.Screen name='Pokédex' component={HomeScreen}
+          options={{
+            title: "Pokédex",
+            headerTitleStyle:{
+              fontSize: 32,
+              color: "#17171B",
+            }
+          }}
+        />
         <Stack.Screen name='Detail' component={PokemonDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    paddingTop: 32
-  }
-})
 
 export default App

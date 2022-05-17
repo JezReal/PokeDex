@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native'
 import {Card} from "../components/Card";
 
 
+
 const renderItem = ({item}) => {
   return (
     <Card pokemon={item}/>
@@ -35,7 +36,6 @@ export const HomeScreen = () => {
       })
   }, [])
 
-
   if (isLoading) {
     return (
       <View>
@@ -57,5 +57,7 @@ export const HomeScreen = () => {
 }
 
 const styles = StyleSheet.create({
-  header: {}
+  header: {
+    borderRadius: 10,
+  }
 })

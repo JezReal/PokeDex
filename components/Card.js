@@ -1,7 +1,8 @@
 import React from 'react'
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native'
+import {StyleSheet, ImageBackground, Text, View, Image, TouchableOpacity} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
-
+import {backgroundColors} from '../assets/color'
+import Pokeball from "../assets/Pokeball.png"
 
 export const Card = (props) => {
   const navigation = useNavigation()
@@ -16,7 +17,11 @@ export const Card = (props) => {
         })
       }}
     >
-      <View>
+      <View style={{...styles.box, backgroundColor: backgroundColors["fire"]}}>
+        <ImageBackground
+          style={{width: 210, height: 105, position: "absolute"}}
+          source={Pokeball}>
+        </ImageBackground>
         <View>
           <Image
             style={styles.imageStyle}
@@ -26,7 +31,7 @@ export const Card = (props) => {
           />
         </View>
 
-        <View>
+        <View style={styles.pokeName}>
           <Text>{pokemonName}</Text>
         </View>
       </View>
@@ -35,9 +40,22 @@ export const Card = (props) => {
 }
 
 const styles = StyleSheet.create({
+  box: {
+    marginVertical: 10,
+    borderRadius: 10,
+  },
+
   imageStyle: {
-    height: 200,
-    width: 200
+    width: 130,
+    height: 130,
+    left: 35,
+  },
+
+  pokeName: {
+    position: "absolute",
+    textColor: "#FFF",
+    left: 200,
+    top: 40
   },
 
   thing: {
