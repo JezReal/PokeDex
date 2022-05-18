@@ -82,7 +82,6 @@ export const PokemonDetail = ({route, navigation}) => {
               <Text style={{top: -20, left: 70, color: "#747476"}}>{pokemonInfo.height}</Text>
               <Text style={{top: -10, right: 80}}>Weight:</Text>
               <Text style={{top: -30, left: 70, color: "#747476",}}>{pokemonInfo.weight}</Text>
-
               <Text style={{fontSize: 20, fontWeight: "bold", marginBottom: 10}}>Stats:</Text>
               <FlatList
                 data={pokemonInfo.stats}

@@ -16,6 +16,9 @@ const App = () => {
             headerTitleStyle:{
               fontSize: 32,
               color: "#17171B",
+              alignSelf: 'center',
+              textAlign: 'center',
+              flex:1
             }
           }}
         />
@@ -24,7 +27,7 @@ const App = () => {
             title: "Pokédex Data",
             headerTitleStyle:{
               fontSize: 25,
-              color: "#17171B",
+              color: "#17171B", 
             }
           }}
         />
