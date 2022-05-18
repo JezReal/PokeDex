@@ -21,13 +21,22 @@ export const HomeScreen = () => {
       })
       .then(pokemon => {
         const newPokemon = pokemon
-
-        newPokemon.map(poke => {
+        return Promise.all(newPokemon.map(poke => {
           let id = poke.url.split('/')[6]
           poke.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
           poke.id = id
-        })
-        setPokemon(newPokemon)
+
+          return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then(response => response.json())
+            .then(data => {
+              poke.types = data.types
+
+              return newPokemon
+            })
+        }))
+      })
+      .then(thing => {
+        setPokemon(thing[0])
         setLoading(false)
       })
       .catch(error => {
@@ -44,7 +53,7 @@ export const HomeScreen = () => {
   } else {
     return (
       <View style={styles.header}>
-        <FlatList 
+        <FlatList
           data={pokemon}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}

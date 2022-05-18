@@ -4,24 +4,27 @@ import {useNavigation} from "@react-navigation/native"
 import {backgroundColors, colors} from "../assets/color"
 import PokeballTwo from "../assets/Images/PokeballTwo.png"
 import Dots from "../assets/Images/Dots.png"
-import { useEffect, useState } from "react/cjs/react.production.min"
 
 export const Card = (props) => {
   const navigation = useNavigation()
   const pokemonName = props.pokemon.name.charAt(0).toUpperCase() + props.pokemon.name.slice(1)
   const pokemonID = props.pokemon.id
   const pokemonTypeOne = "poison"
-  // const pokemonTypeOne = props.pokemon.types[0].type.name
-  // const pokemonTypeTwo = props.pokemon.types[1]?.type.name
-  
+
+  const pokemonTypes = props.pokemon.types
+
+  props.pokemon.types.map(type => {
+    type.type.name = type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)
+  })
+
   return (
     <TouchableOpacity style={{...styles.box, backgroundColor: backgroundColors[pokemonTypeOne], marginVertical: 10}}
-      onPress={() => {
-        navigation.navigate("Detail", {
-          pokemonId: props.pokemon.id,
-          pokemonName: pokemonName,
-        })
-      }}
+    onPress={() => {
+      navigation.navigate("Detail", {
+        pokemonId: props.pokemon.id,
+        pokemonName: pokemonName,
+      })
+    }}
     >
       <View>
         <ImageBackground
@@ -39,12 +42,14 @@ export const Card = (props) => {
 
         <View style={styles.containerOne}>
           <View style={styles.pokemonTypesContainer}>
-            <Text style={styles.pokemonTypesName}>
-              grass
-            </Text>
-            <Text style={styles.pokemonTypesName}>
-              poison
-            </Text>
+            <Text>{pokemonTypes[0].type.name}</Text>
+
+            {/* Show second type if pokemon has a second type */}
+            {pokemonTypes[1] &&
+              <View>
+                <Text>{pokemonTypes[1].type.name}</Text>
+              </View>
+            }
           </View>
 
           <Text style={styles.nameStyle}>
@@ -57,10 +62,10 @@ export const Card = (props) => {
 
         </View>
         <View style={{position: 'absolute', right: 25, top: 5}}>
-          <Image 
+          <Image
             style={{width: 95, height: 40}}
-            source={Dots} 
-            />
+            source={Dots}
+          />
         </View>
       </View>
     </TouchableOpacity>
