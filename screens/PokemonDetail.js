@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {View, Text, StyleSheet, Image, FlatList} from 'react-native'
+import {View, Text, StyleSheet, Image, FlatList, ViewComponent} from 'react-native'
 import PokeballHeader from "../assets/Images/PokeballHeader.png"
 import {backgroundColors, colors} from "../assets/color"
 import Dots from "../assets/Images/Dots.png"
@@ -46,7 +46,7 @@ export const PokemonDetail = ({route, navigation}) => {
             setPokemonInfo(newInfo)
             setInterval(() => setIsLoading(false), 300)
             setPokemonDescription(pokemonInfo.speciesInfo.flavor_text_entries[0].flavor_text.replace(/(\r\n|\n|\r)/gm, " "))
-          
+
           })
       })
   }, [])
@@ -55,16 +55,16 @@ export const PokemonDetail = ({route, navigation}) => {
     return (
       <View style={styles.loading}>
         <Image source={redPokeball} style={{width: 100, height: 100}}/>
-        <Text 
+        <Text
           style={{fontWeight: "bold", fontSize: 25,
           }}>Loading</Text>
       </View>
-      
+
     )
   } else {
     return (
       <View>
-        <View style={{backgroundColor: backgroundColors["grass"], 
+        <View style={{backgroundColor: backgroundColors["grass"],
           alignItems: "center", justifyContent: "center", paddingBottom: 200}}>
           <Image source={PokeballHeader} style={{width: 160, height: 80}} />
           <Image
@@ -76,17 +76,17 @@ export const PokemonDetail = ({route, navigation}) => {
         </View>
 
         <View style={{position: 'absolute', top: 90}}>
-          <Image 
+          <Image
             style={{width: 134, height: 57, left: 22}}
-            source={Dots} 
+            source={Dots}
             />
         </View>
 
         <View style={styles.containerOne}>
           <Text style={styles.pokeName}>{pokemonName}</Text>
           <View style={styles.typesContainer}>
-            <View style={{marginRight: 5, paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[0].type.name]}}> 
-              <Text style={styles.pokeTypes}>{pokemonInfo.types[0].type.name}</Text> 
+            <View style={{marginRight: 5, paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[0].type.name]}}>
+              <Text style={styles.pokeTypes}>{pokemonInfo.types[0].type.name}</Text>
             </View>
             {pokemonInfo.types[1]?.type.name !== undefined &&
             <View style={{paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[1].type.name]}}>
@@ -105,11 +105,26 @@ export const PokemonDetail = ({route, navigation}) => {
               <Text style={{top: -10, right: 80}}>Weight:</Text>
               <Text style={{top: -30, left: 70, color: "#747476",}}>{pokemonInfo.weight}</Text>
               <Text style={{fontSize: 20, fontWeight: "bold", marginBottom: 15}}>Stats:</Text>
-              <FlatList
-                data={pokemonInfo.stats}
-                renderItem={renderStat}
-                keyExtractor={(item) => item.stat.name}
-              />
+
+              <View>
+                <Text>HP:</Text>
+                <Text>{pokemonInfo.stats[0].base_stat}</Text>
+
+                <Text>Attack:</Text>
+                <Text>{pokemonInfo.stats[1].base_stat}</Text>
+
+                <Text>Defense:</Text>
+                <Text>{pokemonInfo.stats[2].base_stat}</Text>
+
+                <Text>Special-Attack:</Text>
+                <Text>{pokemonInfo.stats[3].base_stat}</Text>
+
+                <Text>Special-Defense:</Text>
+                <Text>{pokemonInfo.stats[4].base_stat}</Text>
+
+                <Text>Speed:</Text>
+                <Text>{pokemonInfo.stats[5].base_stat}</Text>
+              </View>
               <Image
                 style={{height: 100, aspectRatio: 1, top: 60}}
                 source={redPokeball}>
@@ -125,9 +140,9 @@ export const PokemonDetail = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   loading: {
-    flex: 1, 
-    backgroundColor: "#fff", 
-    alignItems: "center", 
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
     justifyContent: "center"
   },
 
@@ -140,14 +155,14 @@ const styles = StyleSheet.create({
   },
 
   containerOne: {
-    top: -160, 
+    top: -160,
     left: 20,
   },
 
   pokeName: {
-    fontWeight: "bold", 
-    fontSize: 35, 
-    color: "#fff", 
+    fontWeight: "bold",
+    fontSize: 35,
+    color: "#fff",
   },
 
   typesContainer: {
@@ -172,7 +187,7 @@ const styles = StyleSheet.create({
   },
 
   pokeDescription: {
-    color: "#747476",  
+    color: "#747476",
     paddingBottom: 20,
     fontSize: 14,
     alignContent: "center",
