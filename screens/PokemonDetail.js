@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {View, Text, StyleSheet, Image, FlatList} from 'react-native'
-import loading from "../assets/Images/loading.png"
 import PokeballHeader from "../assets/Images/PokeballHeader.png"
-import {backgroundColors} from "../assets/color"
+import {backgroundColors, colors} from "../assets/color"
 import Dots from "../assets/Images/Dots.png"
 import redPokeball from "../assets/Images/redPokeball.png"
 
@@ -55,7 +54,7 @@ export const PokemonDetail = ({route, navigation}) => {
   if (isLoading) {
     return (
       <View style={styles.loading}>
-        <Image source={loading} style={{width: 100, height: 100}}/>
+        <Image source={redPokeball} style={{width: 100, height: 100}}/>
         <Text 
           style={{fontWeight: "bold", fontSize: 25,
           }}>Loading</Text>
@@ -86,8 +85,14 @@ export const PokemonDetail = ({route, navigation}) => {
         <View style={styles.containerOne}>
           <Text style={styles.pokeName}>{pokemonName}</Text>
           <View style={styles.typesContainer}>
-            <Text style={styles.pokeTypes}>{pokemonInfo.types[0].type.name}</Text>
-            <Text style={styles.pokeTypes}>{pokemonInfo.types[1]?.type.name}</Text>
+            <View style={{marginRight: 5, paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[0].type.name]}}> 
+              <Text style={styles.pokeTypes}>{pokemonInfo.types[0].type.name}</Text> 
+            </View>
+            {pokemonInfo.types[1]?.type.name !== undefined &&
+            <View style={{paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[1].type.name]}}>
+              <Text style={styles.pokeTypes}>{pokemonInfo.types[1]?.type.name}</Text>
+            </View>
+            }
           </View>
         </View>
 
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
     height: 190,
     aspectRatio: 1,
     top: 50,
-    right: 15
+    right: 5
   },
 
   containerOne: {
@@ -148,12 +153,11 @@ const styles = StyleSheet.create({
   typesContainer: {
     flexDirection: "row",
     alignContent: "space-between",
+    // alignSelf: "flex-start"
   },
 
   pokeTypes: {
     color: "#fff",
-    marginRight: 5,
-    backgroundColor: "#62B957",
     borderRadius: 5,
     padding: 3,
     textTransform: "capitalize",
