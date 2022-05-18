@@ -1,8 +1,10 @@
 import React from 'react'
+import {Image} from "react-native"
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {HomeScreen} from './screens/HomeScreen'
 import {PokemonDetail} from "./screens/PokemonDetail"
+import pokedex from "./assets/Images/pokedex.png"
 
 const Stack = createNativeStackNavigator()
 
@@ -10,16 +12,14 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='Pokédex' component={HomeScreen}
+        <Stack.Screen name = "pokedex" component={HomeScreen}
           options={{
-            title: "Pokédex",
-            headerTitleStyle:{
-              fontSize: 32,
-              color: "#17171B",
-              alignSelf: 'center',
-              textAlign: 'center',
-              flex:1
-            }
+            headerTitle: (props) => (
+              <Image source={require("./assets/Images/pokedex.png")}
+              resizeMode = "contain" 
+              style={{height: 50, alignItems: "center", justifyContent: "center"}}
+              />
+            ),
           }}
         />
         <Stack.Screen name='Detail' component={PokemonDetail} 

@@ -2,7 +2,7 @@ import React from "react"
 import {StyleSheet, ImageBackground, Text, View, Image, TouchableOpacity} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {backgroundColors, colors} from "../assets/color"
-import Pokeball from "../assets/Images/Pokeball.png"
+import PokeballTwo from "../assets/Images/PokeballTwo.png"
 import Dots from "../assets/Images/Dots.png"
 import { useEffect, useState } from "react/cjs/react.production.min"
 
@@ -25,8 +25,8 @@ export const Card = (props) => {
     >
       <View>
         <ImageBackground
-          style={{width: 190, height: 130, position: "absolute"}}
-          source={Pokeball}>
+          style={{width: 270, height: 130, position: "absolute", right: 145}}
+          source={PokeballTwo}>
         </ImageBackground>
         <View>
           <Image
@@ -37,7 +37,7 @@ export const Card = (props) => {
           />
         </View>
 
-        <View style={styles.nameContainer}>
+        <View style={styles.containerOne}>
           <View style={styles.pokemonTypesContainer}>
             <Text style={styles.pokemonTypesName}>
               grass
@@ -57,7 +57,10 @@ export const Card = (props) => {
 
         </View>
         <View style={{position: 'absolute', right: 25, top: 5}}>
-          <Image source={Dots} style={{width: 95, height: 40}}/>
+          <Image 
+            style={{width: 95, height: 40}}
+            source={Dots} 
+            />
         </View>
       </View>
     </TouchableOpacity>
@@ -75,37 +78,39 @@ const styles = StyleSheet.create({
     left: 30,
   },
 
-  nameContainer: {
+  containerOne: {
     position: "absolute",
     left: 200,
     top: 40
   },
 
   pokemonTypesContainer: {
-    borderRadius: 5,
     flexDirection: "row",
-    top: -10,
     alignContent: "space-between",
+    top: -5,
   },
 
   nameStyle: {
-    top: -10,
     fontWeight: "bold",
     fontSize: 25,
-    color: "#fff"
+    color: "#fff",
+    top: -5,
   },
 
   pokemonTypesName: {
     color: "#fff",
     marginRight: 5,
-    padding: 5
+    backgroundColor: "#62B957",
+    borderRadius: 5,
+    padding: 3,
+    textTransform: "capitalize",
   },
 
   pokemonID: {
-    left: 90,
-    top: -15,
+    left: 85,
+    top: -22,
     color: "rgba(23, 23, 27, 0.2)",
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: "bold"
   },
 
