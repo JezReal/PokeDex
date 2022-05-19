@@ -27,7 +27,6 @@ export const PokemonDetail = ({route, navigation}) => {
   const {pokemonId, pokemonName} = route.params
   const [pokemonInfo, setPokemonInfo] = useState()
   const [isLoading, setIsLoading] = useState(true)
-
   const [pokemonDescription, setPokemonDescription] = useState()
 
   useEffect(() => {
@@ -46,6 +45,10 @@ export const PokemonDetail = ({route, navigation}) => {
             setPokemonInfo(newInfo)
             setInterval(() => setIsLoading(false), 300)
             setPokemonDescription(pokemonInfo.speciesInfo.flavor_text_entries[0].flavor_text.replace(/(\r\n|\n|\r)/gm, " "))
+            
+            pokemonInfo.types.map(type => {
+              type.type.name = type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)
+            })
 
           })
       })
@@ -64,8 +67,12 @@ export const PokemonDetail = ({route, navigation}) => {
   } else {
     return (
       <View>
-        <View style={{backgroundColor: backgroundColors["grass"],
-          alignItems: "center", justifyContent: "center", paddingBottom: 200}}>
+        <View style={{
+          backgroundColor: backgroundColors[pokemonInfo.types[0].type.name],
+          alignItems: "center", 
+          justifyContent: "center", 
+          paddingBottom: 200
+          }}>
           <Image source={PokeballHeader} style={{width: 160, height: 80}} />
           <Image
             style={styles.imageStyle}
@@ -74,10 +81,12 @@ export const PokemonDetail = ({route, navigation}) => {
             }}
           />
         </View>
-
-        <View style={{position: 'absolute', top: 90}}>
+        <Text style={styles.pokemonID}>
+            #{('00' + pokemonId).slice(-3)}
+        </Text>
+        <View style={{width: "100%", position: 'absolute', alignItems: "flex-end"}}>
           <Image
-            style={{width: 134, height: 57, left: 22}}
+            style={{width: 120, height: 52, marginTop: 30}}
             source={Dots}
             />
         </View>
@@ -85,11 +94,15 @@ export const PokemonDetail = ({route, navigation}) => {
         <View style={styles.containerOne}>
           <Text style={styles.pokeName}>{pokemonName}</Text>
           <View style={styles.typesContainer}>
-            <View style={{marginRight: 5, paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[0].type.name]}}>
+            <View style={[styles.typesStyle, {
+              backgroundColor: colors[pokemonInfo.types[0].type.name]
+              }]}>
               <Text style={styles.pokeTypes}>{pokemonInfo.types[0].type.name}</Text>
             </View>
             {pokemonInfo.types[1]?.type.name !== undefined &&
-            <View style={{paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors[pokemonInfo.types[1].type.name]}}>
+            <View style={[styles.typesStyle, {
+              backgroundColor: colors[pokemonInfo.types[1].type.name]
+              }]}>
               <Text style={styles.pokeTypes}>{pokemonInfo.types[1]?.type.name}</Text>
             </View>
             }
@@ -97,40 +110,46 @@ export const PokemonDetail = ({route, navigation}) => {
         </View>
 
         <View style={styles.containerTwo}>
-          <View style={{top: 25}}>
-            <Text style={styles.pokeDescription}>{pokemonDescription}</Text>
-            <View style={{alignItems: "center", justifyContent: "center"}}>
-              <Text style={{right: 80}}>Height:</Text>
-              <Text style={{top: -20, left: 70, color: "#747476"}}>{pokemonInfo.height}</Text>
-              <Text style={{top: -10, right: 80}}>Weight:</Text>
-              <Text style={{top: -30, left: 70, color: "#747476",}}>{pokemonInfo.weight}</Text>
-              <Text style={{fontSize: 20, fontWeight: "bold", marginBottom: 15}}>Stats:</Text>
-
-              <View>
-                <Text>HP:</Text>
-                <Text>{pokemonInfo.stats[0].base_stat}</Text>
-
-                <Text>Attack:</Text>
-                <Text>{pokemonInfo.stats[1].base_stat}</Text>
-
-                <Text>Defense:</Text>
-                <Text>{pokemonInfo.stats[2].base_stat}</Text>
-
-                <Text>Special-Attack:</Text>
-                <Text>{pokemonInfo.stats[3].base_stat}</Text>
-
-                <Text>Special-Defense:</Text>
-                <Text>{pokemonInfo.stats[4].base_stat}</Text>
-
-                <Text>Speed:</Text>
-                <Text>{pokemonInfo.stats[5].base_stat}</Text>
-              </View>
-              <Image
-                style={{height: 100, aspectRatio: 1, top: 60}}
-                source={redPokeball}>
-              </Image>
-            </View>
+          <Text style={styles.pokeDescription}>{pokemonDescription}</Text>
+          <View style={{marginVertical: 20,}}>
+            <Text style={styles.textStyleOne}>Height: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(12) + pokemonInfo.height}</Text>
+            </Text>
+            <Text style={styles.textStyleOne}>Weight: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(12) + pokemonInfo.weight}</Text>
+            </Text>
           </View>
+          <Text style={{
+            fontSize: 20, 
+            fontWeight: "bold", 
+            marginBottom: 15, 
+            color: colors[pokemonInfo.types[0].type.name]
+            }}>Stats:</Text>
+
+          <View style={{marginBottom: 20}}>
+            <Text style={styles.textStyleOne}>HP: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(14) + pokemonInfo.stats[0].base_stat}</Text>
+            </Text>
+            <Text style={styles.textStyleOne}>Attack: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(12) + pokemonInfo.stats[1].base_stat}</Text>
+            </Text>
+            <Text style={styles.textStyleOne}>Defense: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(11) + pokemonInfo.stats[2].base_stat}</Text>
+            </Text>
+            <Text style={styles.textStyleOne}>Special-Attack: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(7) + pokemonInfo.stats[3].base_stat}</Text>
+            </Text>
+            <Text style={styles.textStyleOne}>Special-Defense: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(6) + pokemonInfo.stats[4].base_stat}</Text>
+            </Text>
+            <Text style={styles.textStyleOne}>Speed: 
+              <Text style={styles.textStyleTwo}>{'\t'.repeat(12) + pokemonInfo.stats[5].base_stat}</Text>
+            </Text>
+          </View>
+          <Image
+            style={{height: 100, aspectRatio: 1, justifyContent: "flex-end"}}
+            source={redPokeball}>
+          </Image>
         </View>
       </View>
     )
@@ -154,6 +173,22 @@ const styles = StyleSheet.create({
     right: 5
   },
 
+  pokemonID: {
+    color: "rgba(23, 23, 27, 0.2)",
+    fontSize: 45,
+    fontWeight: "bold",
+    position: "absolute",
+    paddingTop: 70,
+    paddingLeft: 20,
+    
+  },
+
+  typesStyle: {
+    marginRight: 5, 
+    paddingHorizontal: 5, 
+    borderRadius: 5, 
+  },
+
   containerOne: {
     top: -160,
     left: 20,
@@ -168,7 +203,6 @@ const styles = StyleSheet.create({
   typesContainer: {
     flexDirection: "row",
     alignContent: "space-between",
-    // alignSelf: "flex-start"
   },
 
   pokeTypes: {
@@ -183,12 +217,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 50,
     top: -120,
-    paddingBottom: 500,
+    height: "100%",
+    paddingTop: 20,
+    alignItems: "center", 
+  },
+
+  textStyleOne: { 
+    color: "#17171B", 
+    fontWeight: "500",
+    marginBottom: 10,
+  },
+
+  textStyleTwo: {
+    color: "#747476",
   },
 
   pokeDescription: {
     color: "#747476",
-    paddingBottom: 20,
     fontSize: 14,
     alignContent: "center",
     justifyContent: "center",

@@ -9,8 +9,7 @@ export const Card = (props) => {
   const navigation = useNavigation()
   const pokemonName = props.pokemon.name.charAt(0).toUpperCase() + props.pokemon.name.slice(1)
   const pokemonID = props.pokemon.id
-  const pokemonTypeOne = "poison"
-
+  const pokemonBackground = props.pokemon.types[0].type.name
   const pokemonTypes = props.pokemon.types
 
   props.pokemon.types.map(type => {
@@ -18,7 +17,11 @@ export const Card = (props) => {
   })
 
   return (
-    <TouchableOpacity style={{...styles.box, backgroundColor: backgroundColors[pokemonTypeOne], marginVertical: 10}}
+    <TouchableOpacity style={{
+      borderRadius: 10, 
+      backgroundColor: backgroundColors[pokemonBackground], 
+      marginVertical: 10
+      }}
     onPress={() => {
       navigation.navigate("Detail", {
         pokemonId: props.pokemon.id,
@@ -28,12 +31,12 @@ export const Card = (props) => {
     >
       <View>
         <ImageBackground
-          style={{width: 270, height: 130, position: "absolute", right: 145}}
+          style={styles.ImageOne}
           source={PokeballTwo}>
         </ImageBackground>
         <View>
           <Image
-            style={styles.imageStyle}
+            style={styles.ImageTwo}
             source={{
               uri: props.pokemon.image
             }}
@@ -42,12 +45,17 @@ export const Card = (props) => {
 
         <View style={styles.containerOne}>
           <View style={styles.pokemonTypesContainer}>
-            <Text>{pokemonTypes[0].type.name}</Text>
-
+            <View style={[styles.typesStyle, {
+              backgroundColor: colors[pokemonTypes[0].type.name]
+              }]}>
+              <Text style={styles.pokeTypes}>{pokemonTypes[0].type.name}</Text>
+            </View>
             {/* Show second type if pokemon has a second type */}
             {pokemonTypes[1] &&
-              <View>
-                <Text>{pokemonTypes[1].type.name}</Text>
+              <View style={[styles.typesStyle, {
+              backgroundColor: colors[pokemonTypes[1].type.name]
+              }]}>
+                <Text style={styles.pokeTypes}>{pokemonTypes[1].type.name}</Text>
               </View>
             }
           </View>
@@ -61,7 +69,7 @@ export const Card = (props) => {
           </Text>
 
         </View>
-        <View style={{position: 'absolute', right: 25, top: 5}}>
+        <View style={styles.ImageThree}>
           <Image
             style={{width: 95, height: 40}}
             source={Dots}
@@ -73,14 +81,25 @@ export const Card = (props) => {
 }
 
 const styles = StyleSheet.create({
-  box: {
-    borderRadius: 10,
+
+  ImageOne: {
+    width: 270, 
+    height: 130, 
+    overflow: "hidden",
+    position: "absolute",
+    marginLeft: -35,
   },
 
-  imageStyle: {
+  ImageTwo: {
     width: 130,
     height: 130,
-    left: 30,
+    marginLeft: 40
+  },
+
+  ImageThree: {
+    position: 'absolute', 
+    right: 25, 
+    top: 5
   },
 
   containerOne: {
@@ -95,11 +114,25 @@ const styles = StyleSheet.create({
     top: -5,
   },
 
+  typesStyle: {
+    marginRight: 5, 
+    paddingHorizontal: 5, 
+    borderRadius: 5, 
+  },
+
+  pokeTypes: {
+    color: "#fff",
+    borderRadius: 5,
+    padding: 3,
+    textTransform: "capitalize",
+  },
+
   nameStyle: {
     fontWeight: "bold",
     fontSize: 25,
     color: "#fff",
     top: -5,
+    marginBottom: -22
   },
 
   pokemonTypesName: {
@@ -112,8 +145,7 @@ const styles = StyleSheet.create({
   },
 
   pokemonID: {
-    left: 85,
-    top: -22,
+    paddingLeft: 80,
     color: "rgba(23, 23, 27, 0.2)",
     fontSize: 35,
     fontWeight: "bold"

@@ -17,7 +17,7 @@ const App = () => {
             headerTitle: (props) => (
               <Image source={require("./assets/Images/pokedex.png")}
               resizeMode = "contain" 
-              style={{height: 50, alignItems: "center", justifyContent: "center"}}
+              style={{height: 40, alignItems: "center", justifyContent: "center"}}
               />
             ),
           }}
